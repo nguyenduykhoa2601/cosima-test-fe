@@ -1,22 +1,22 @@
 # PDF Highlight & Find Related Text - Frontend
 
-Web application cho phép người dùng xem PDF, highlight text, tìm kiếm text liên quan và jump tới vị trí đó trong document.
+Web application for viewing PDFs, highlighting text, finding related text, and jumping to locations in the document.
 
 ## Features
 
 ### Frontend
 
-- **PDF Viewing**: Hiển thị PDF với khả năng navigate qua các pages
-- **Highlight**: Chọn text và tạo highlight, hiển thị danh sách highlights
-- **Find Related**: Tìm các đoạn text liên quan trong cùng PDF
-- **Jump + Visual Indication**: Click để jump tới vị trí và highlight vùng đó
-- **Loading & Empty States**: Hiển thị trạng thái loading và empty
+- **PDF Viewing**: Display PDF with page navigation
+- **Highlight**: Select text to create highlights and view highlight list
+- **Find Related**: Search for related text in the same PDF
+- **Jump + Visual Indication**: Click to jump to location with visual highlight
+- **Loading & Empty States**: Display loading and empty states
 
 ### Backend Integration
 
 - API endpoint: `POST http://localhost:8000/api/search`
-- Request: `multipart/form-data` với `query` (text), `file` (PDF), và `top_k` (number, optional)
-- Response: Danh sách results với page_number, text, snippet, confidence, bounding_box
+- Request: `multipart/form-data` with `query` (text), `file` (PDF), and `top_k` (number, optional)
+- Response: List of results with page_number, text, snippet, confidence, bounding_box
 
 ## Tech Stack
 
@@ -32,12 +32,12 @@ Web application cho phép người dùng xem PDF, highlight text, tìm kiếm te
 src/
 ├── components/
 │   ├── PDFViewer.tsx          # Main PDF viewer component
-│   ├── HighlightPanel.tsx     # Sidebar hiển thị danh sách highlights
-│   ├── RelatedResultsPanel.tsx # Sidebar hiển thị kết quả tìm kiếm
+│   ├── HighlightPanel.tsx     # Sidebar displaying highlights list
+│   ├── RelatedResultsPanel.tsx # Sidebar displaying search results
 │   ├── LoadingSpinner.tsx     # Loading component
 │   └── EmptyState.tsx         # Empty state component
 ├── services/
-│   └── api.ts                 # API service cho backend calls
+│   └── api.ts                 # API service for backend calls
 ├── types/
 │   └── index.ts               # TypeScript type definitions
 ├── App.tsx                    # Root component
@@ -63,7 +63,7 @@ npm install
 npm run dev
 ```
 
-App sẽ chạy tại `http://localhost:5173`
+App will run at `http://localhost:5173`
 
 ### Build for Production
 
@@ -79,29 +79,23 @@ npm run preview
 
 ## Usage
 
-1. **Upload PDF**: Click nút "Upload PDF" và chọn file PDF
-2. **View PDF**: Sử dụng nút Previous/Next để navigate
-3. **Create Highlight**: Select text trên PDF để tạo highlight
-4. **Find Related**: Click "Find Related" trên highlight để tìm text liên quan
-5. **Jump to Location**: Click "Jump" hoặc "Jump to location" để nhảy tới vị trí
+1. **Upload PDF**: Click "Upload PDF" button and select a PDF file
+2. **View PDF**: Use Previous/Next buttons to navigate pages
+3. **Create Highlight**: Select text on PDF to create a highlight
+4. **Find Related**: Click "Find Related" on a highlight to search for related text
+5. **Jump to Location**: Click "Jump" or "Jump to location" to navigate to that position
 
 ## How It Works
 
 ### Related Text Matching
 
-- Frontend gửi highlighted text + PDF file tới backend
-- Backend xử lý và trả về danh sách results với:
+- Frontend sends highlighted text + PDF file to backend
+- Backend processes and returns list of results with:
   - `page_number`: Page number
   - `text`: Full matched text from PDF
   - `snippet`: Preview of matched text
   - `confidence`: Match confidence score (0-1)
   - `bounding_box`: Coordinates {x0, y0, x1, y1}
-
-### Visual Indication
-
-- Khi jump tới location, hiển thị yellow border animated
-- Border tự động mất sau 2 giây
-- Sử dụng absolute positioning với coordinates từ backend
 
 ## API Contract
 
@@ -140,9 +134,8 @@ npm run preview
 }
 ```
 
-## Notes
+## Error Handling
 
-- Backend phải chạy trên `http://localhost:8000`
-- Support multiple highlights
-- Có thể extend thêm confidence score cho ranking
-- PDF worker được load từ CDN (unpkg.com)
+- Displays error message when backend server is unreachable
+- Shows user-friendly error notification in the Related Results panel
+- Backend must be running on `http://localhost:8000` for the app to work
