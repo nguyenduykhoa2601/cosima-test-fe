@@ -74,12 +74,19 @@ const PDFViewer = ({ file }: PDFViewerProps) => {
 		try {
 			const response = await searchRelatedText(highlight.text, file);
 			setRelatedResults(response.results);
+			setError(null); // Clear any previous errors on success
 		} catch (error) {
 			console.error("Error finding related text:", error);
 			setRelatedResults([]);
-			setError(
-				"Failed to connect to backend server. Please make sure the server is running on port 8000.",
-			);
+
+			// Display proper error message
+			if (error instanceof Error) {
+				setError(error.message);
+			} else {
+				setError(
+					"Failed to connect to backend server. Please make sure the server is running on port 8000.",
+				);
+			}
 		} finally {
 			setIsLoading(false);
 		}
